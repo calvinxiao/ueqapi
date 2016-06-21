@@ -1,0 +1,27 @@
+{
+  "name": "ueqapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "",
+    "test": "mocha"
+  },
+  "keywords": [
+    "ueq"
+  ],
+  "author": "Calvin Xiao",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "co": "^4.6.0",
+    "debug": "^2.2.0",
+    "lodash": "^4.13.1",
+    "moment": "^2.13.0",
+    "request-promise": "^3.0.0"
+  },
+  "devDependencies": {
+    "co-mocha": "^1.1.2",
+    "mocha": "^2.5.3"
+  }
+}

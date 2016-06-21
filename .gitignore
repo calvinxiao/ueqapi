@@ -1,0 +1,9 @@
+node_modules/
+.idea/
+.svn/
+*.iml
+coverage/
+*.log
+upload/
+test.js
+test_scripts/
