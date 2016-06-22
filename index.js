@@ -1,4 +1,5 @@
 /**
+ * All apis return Promise, no more callback
  * Created by calvin on 6/21/16.
  */
 
@@ -10,10 +11,11 @@ const _ = require('lodash');
 const debug = require('debug')('ueqapi');
 const querystring = require('querystring');
 const requestPromise = require('request-promise');
+//requestPromise.debug = true;
 const co = require('co');
 
 /**
- * 构造函数
+ * constructor
  * @param options
  * @constructor
  */
@@ -37,7 +39,7 @@ function Api(options) {
 }
 
 /**
- * 签名
+ * get sign
  * @param options
  * @returns {String}
  */
@@ -68,7 +70,7 @@ Api.prototype.sign = function (options) {
 };
 
 /**
- * 获取默认设置
+ * get default config
  * @returns {{format: string, v: string, timestamp: *, appkey: *, token: *}}
  */
 Api.prototype.getDefaultOptions = function () {
@@ -82,7 +84,7 @@ Api.prototype.getDefaultOptions = function () {
 };
 
 /**
- *
+ * build option helper
  * @param options
  * @returns {{format: string, v: string, timestamp: *, appkey: *, token: *}}
  */
@@ -99,26 +101,48 @@ Api.prototype.buildOptions = function (options) {
 };
 
 /**
- * 增加订单
+ * add order to ueq
  * @param orderObject, {}
  */
 Api.prototype.addOrder = function (orderObject) {
     let options = {
         method: 'ueq.order.add',
-        params: JSON.stringify(1)
+        params: JSON.stringify(orderObject)
     };
 
     return this.request(options);
 
 };
 
-// 查询订单状态信息
-Api.prototype.getOrder = function () {
+/**
+ * get order info
+ * @param orderId, 订单id
+ */
+Api.prototype.getOrder = function (orderId) {
+    let options = {
+        method: 'ueq.order.get',
+        params: JSON.stringify({orderId: orderId})
+    };
 
+    return this.request(options);
 };
 
 /**
- * 查询订单路由信息(根据 UEQ 物流单号查询)
+ * get order state
+ * @param orderId, 订单id
+ */
+Api.prototype.getOrderState = function (orderId) {
+    //ueq.orderstate.get
+    let options = {
+        method: 'ueq.orderstate.get',
+        params: JSON.stringify({orderId: orderId})
+    };
+
+    return this.request(options);
+};
+
+/**
+ * get order express delivery routes, by ueq express number
  * @param expressCode, 物流单号
  * @returns {Promise}
  */
@@ -132,7 +156,7 @@ Api.prototype.getExpressByCode = function (expressCode) {
 };
 
 /**
- * 内部http工具
+ * http helper with request-promise
  * @param options
  * @returns {Promise}
  */
@@ -140,13 +164,13 @@ Api.prototype.request = function(options) {
     options = this.buildOptions(options);
     let sign = this.sign(options);
     options.sign = sign;
-    debug(options);
+    debug(JSON.stringify(options));
     let queryString = querystring.stringify(options);
     debug(queryString);
     return requestPromise({
         method: 'POST',
         uri: this.options.apiUrlPrefix,
-        qs: options,
+        form: options,
         headers: {
             'Content-type': 'application/x-www-form-urlencoded',
             'Accept-Charset': 'utf-8'

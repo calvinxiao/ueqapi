@@ -4,12 +4,11 @@
 "use strict";
 
 const crypto = require('crypto');
+const nodeMd5 = require('md5');
 
 module.exports = {
     md5: str => {
-        let hash = crypto.createHash('md5');
-        hash.update(str);
-        return hash.digest('hex');
+        return nodeMd5(str);
     },
     toBase64: str => {
         return new Buffer(str).toString('base64');
