@@ -28,7 +28,7 @@ function Api(options) {
         appkey: options.appkey,
         token: options.token,
         secret: options.secret,
-        apiUrlPrefix: 'http://120.26.227.237:2020/ueq-openapi/openapi/handle'
+        apiUrlPrefix: 'http://120.26.227.237:2020/ueq-openapi/openapi/handle' // for test
     };
 
     if (options.apiUrlPrefix) {

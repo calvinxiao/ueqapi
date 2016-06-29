@@ -16,6 +16,14 @@ describe('Testing utils', function() {
        done();
    });
 
+    it('should output correct md5 for Chinese character as well', function(done) {
+        let origin = '世界你好';
+        let expect = 'bf60891bb61c8e35a770a3920b317618';
+        let actual = utils.md5(origin);
+        assert(expect === actual, `wrong md5 ${JSON.stringify({actual: actual, expect: expect})}`);
+        done();
+    });
+
     it('should output correct base64 string', function(done) {
         let origin = '123456';
         let expect = 'MTIzNDU2';

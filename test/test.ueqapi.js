@@ -58,7 +58,7 @@ describe('Testing ueqapi', function () {
         co(function* () {
             let orderId = 'Z2106110001';
             let result = yield api.getOrderState(orderId);
-            console.log(JSON.stringify(result));
+            //console.log(JSON.stringify(result));
         }).then(done).catch(done);
     });
 
